@@ -77,7 +77,7 @@ public class Encryptor
         String encryptedMessage = "";
         int elements = numRows * numCols;
         int num = message.length() / elements;
-        if (message.length() / num != 0)
+        if (message.length() % elements != 0)
         {
             num ++;
         }
@@ -85,8 +85,11 @@ public class Encryptor
         {
             fillBlock(message);
             encryptedMessage += encryptBlock();
+            if (message.length() > elements)
+            {
+                message = message.substring(elements);
+            }
         }
-        if ()
         return encryptedMessage;
     }
 
@@ -114,7 +117,37 @@ public class Encryptor
      */
     public String decryptMessage(String encryptedMessage)
     {
-        return "";
+        String[][] decryption = new String[numRows][numCols];
+        int index = 0;
+        String originalMessage = "";
+        int num = (encryptedMessage.length() / (numRows * numCols));
+        if((encryptedMessage.length() % (numRows * numCols)) != 0)
+        {
+            num ++;
+        }
+        for (int k = 0; k < num; k ++)
+        {
+            for (int i = 0; i < numCols; i ++)
+            {
+                for (int j = 0; j < numRows; j ++)
+                {
+                    decryption[j][i] = encryptedMessage.substring(index, index + 1);
+                    index ++;
+                }
+            }
+            for (int i = 0; i < numRows; i ++)
+            {
+                for (int j = 0; j < numCols; j ++)
+                {
+                    originalMessage = originalMessage + decryption[i][j];
+                }
+            }
+        }
+        while(originalMessage.charAt(originalMessage.length() - 1) == 'A')
+        {
+            originalMessage = originalMessage.substring(0, originalMessage.length() - 1);
+        }
+        return originalMessage;
     }
 
 }
