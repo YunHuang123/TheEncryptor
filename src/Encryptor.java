@@ -75,8 +75,19 @@ public class Encryptor
     public String encryptMessage(String message)
     {
         String encryptedMessage = "";
-        encryptedMessage += fillBlock(message);
-        return "";
+        int elements = numRows * numCols;
+        int num = message.length() / elements;
+        if (message.length() / num != 0)
+        {
+            num ++;
+        }
+        for (int i = 0; i < num; i ++)
+        {
+            fillBlock(message);
+            encryptedMessage += encryptBlock();
+        }
+        if ()
+        return encryptedMessage;
     }
 
     /**  Decrypts an encrypted message. All filler 'A's that may have been
